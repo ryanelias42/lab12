@@ -211,6 +211,18 @@ public class DataEntryFrame extends JFrame
 					lastName.getText(), displayName.getText(), SSN.getText(), phone.getText(), email.getText(),
 					address.getText(), spanel.getSignature());
 			
+			if (datalist.get(select).setValues(firstName.getText(), middleInitial.getText().charAt(0),
+					lastName.getText(), displayName.getText(), SSN.getText(), phone.getText(), email.getText(),
+					address.getText(), spanel.getSignature()) == false) {
+				errorField.setText("Failed to Update Form Information!");
+				
+			}
+			else {
+				errorField.setText("Form Information Successfully Updated!");			
+				}
+			
+
+			
 			
 			this.setVisuals(datalist.get(select));
 			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
@@ -218,20 +230,7 @@ public class DataEntryFrame extends JFrame
 			formSelect.setSelectedIndex(select);
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
-			
-			//todo above complete
-			
-			//if above setValues function returns true, then the errorField is set to success message
-			//if false, sets error message
-			if (datalist.get(select).setValues(firstName.getText(), middleInitial.getText().charAt(0),
-					lastName.getText(), displayName.getText(), SSN.getText(), phone.getText(), email.getText(),
-					address.getText(), spanel.getSignature())) {
-				errorField.setText("Form Information Successfully Updated!");
-			}
-			else {
-				errorField.setText("Failed to Update Form Information!");
-			}
-			
+	
 		});
 
 		JButton resetForm = new JButton("Reset");
@@ -270,6 +269,10 @@ public class DataEntryFrame extends JFrame
 			JFileChooser chooser = new JFileChooser();
 			chooser.showOpenDialog(importButton);
 			File file = chooser.getSelectedFile();
+			if (file == null) {
+				errorField.setText("No File Selected!");
+			}
+			else {
 			try {
 				FileInputStream input = new FileInputStream(file.getAbsolutePath());
 				ObjectInputStream objIn = new ObjectInputStream(input);
@@ -292,7 +295,7 @@ public class DataEntryFrame extends JFrame
 				errorField.setText("ClassNotFoundException Thrown!");
 			}
 
-			
+			}
 			
 			
 				
@@ -320,6 +323,10 @@ public class DataEntryFrame extends JFrame
 			JFileChooser chooser = new JFileChooser();
 			chooser.showOpenDialog(exportButton);
 			File file = chooser.getSelectedFile();
+			if (file == null) {
+				errorField.setText("No File Selected!");
+			}
+			else {
 			try {
 			FileOutputStream output = new FileOutputStream(file.getAbsolutePath());
 			ObjectOutputStream objOut = new ObjectOutputStream(output);
@@ -338,6 +345,7 @@ public class DataEntryFrame extends JFrame
 			// TODO: display error message on fail, else display success message
 			
 			//all todos in actionlistener complete
+			}
 		});
 
 		// TODO: add import/export to panel and add to frame
